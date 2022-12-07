@@ -19,5 +19,7 @@ class Player(Turtle):
         self.setpos(STARTING_POSITION)
 
     def move(self):
-        new_y = self.ycor() + MOVE_DISTANCE
-        self.goto(self.xcor(), new_y)
+        self.forward(MOVE_DISTANCE)
+
+    def reach_goal(self):
+        return self.ycor() > FINISH_LINE_Y

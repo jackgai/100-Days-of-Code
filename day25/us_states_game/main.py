@@ -11,7 +11,6 @@ turtle.shape(image)
 data = pandas.read_csv("50_states.csv")
 
 correct_answer = []
-leaning_list = []
 answer_len = data.shape[0]
 
 while len(correct_answer) < answer_len:
@@ -39,11 +38,9 @@ while len(correct_answer) < answer_len:
 
     correct_answer.append(answer_title_case)
 
-for state_t in data["state"].tolist():
-    if state_t not in correct_answer:
-        leaning_list.append(state_t)
+learning_list = [state for state in data["state"].tolist() if state not in correct_answer]
 
-df = pandas.DataFrame(leaning_list, columns=["States"])
+df = pandas.DataFrame(learning_list, columns=["States"])
 df.to_csv("states_leaning_list.csv")
 
 # def get_mouse_click_coor(x, y):

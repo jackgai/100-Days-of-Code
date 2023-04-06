@@ -9,13 +9,11 @@ def write_data():
     email = user_name_entry.get()
     password = password_entry.get()
 
-    save_content = website + " | " + email + " | " + password + "\n"
-    f = open("data.txt", "a")
-    f.write(save_content)
-    f.close()
-
-    website_entry.delete(0, END)
-    password_entry.delete(0, END)
+    with open("data.txt", "a") as f:
+        save_content = f"{website} | {email} | {password}\n"
+        f.write(save_content)
+        website_entry.delete(0, END)
+        password_entry.delete(0, END)
 
 
 # ---------------------------- UI SETUP ------------------------------- #

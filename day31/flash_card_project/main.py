@@ -6,8 +6,12 @@ BACKGROUND_COLOR = "#B1DDC6"
 current_card = {}
 
 # ---------------------------- READ DATA ------------------------------- #
-data = pd.read_csv("data/french_words.csv")
-word_dict = data.to_dict(orient="records")
+try:
+    data = pd.read_csv("words_to_learn.csv")
+except FileNotFoundError:
+    data = pd.read_csv("data/french_words.csv")
+finally:
+    word_dict = data.to_dict(orient="records")
 
 
 # ---------------------------- FLIP CARD ------------------------------- #
@@ -29,6 +33,18 @@ def pick_card():
     window.after(3000, func=flip_card)
 
 
+# ---------------------------- REMOVE CARDS ------------------------------- #
+def remove_card():
+    word_dict.remove(current_card)
+    save_cards()
+
+
+# ---------------------------- SAVE NEED TO LEARN CARDS ------------------------------- #
+def save_cards():
+    df = pd.DataFrame(word_dict)
+    df.to_csv("data/words_to_learn.csv", index=False)
+
+
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Flashy")
@@ -45,7 +61,8 @@ canvas.config(bg=BACKGROUND_COLOR, highlightthickness=0)
 canvas.grid(column=0, row=0, columnspan=2)
 
 check_img = PhotoImage(file="images/right.png")
-right_button = Button(image=check_img, highlightthickness=0, command=pick_card)
+
+right_button = Button(image=check_img, highlightthickness=0, command=lambda: [remove_card(), pick_card()])
 right_button.grid(column=0, row=1)
 
 cross_img = PhotoImage(file="images/wrong.png")

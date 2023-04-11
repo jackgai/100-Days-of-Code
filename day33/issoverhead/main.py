@@ -5,9 +5,6 @@ import time
 import smtplib
 import config
 
-MY_LAT = 35.181446  # Your latitude
-MY_LONG = 136.906403  # Your longitude
-
 
 def iss_is_overhead():
     response = requests.get(url="http://api.open-notify.org/iss-now.json")
@@ -18,17 +15,17 @@ def iss_is_overhead():
     iss_longitude = float(data["iss_position"]["longitude"])
 
     # Your position is within +5 or -5 degrees of the ISS position.
-    if abs(MY_LAT - iss_latitude) > 5:
+    if abs(config.MY_LAT - iss_latitude) > 5:
         return False
-    if abs(MY_LONG - iss_longitude) > 5:
+    if abs(config.MY_LONG - iss_longitude) > 5:
         return False
     return True
 
 
 def is_night():
     parameters = {
-        "lat": MY_LAT,
-        "lng": MY_LONG,
+        "lat": config.MY_LAT,
+        "lng": config.MY_LONG,
         "formatted": 0,
     }
 
